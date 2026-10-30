@@ -5,15 +5,15 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 14px;
-    height: 14px;
+    width: 28px;
+    height: 28px;
     margin: -7px 0 0 -7px;
     border-radius: 50%;
     background: var(--accent);
     pointer-events: none;
     z-index: 100;
-    opacity: 0;
-    mix-blend-mode: difference;
+    opacity: 100;
+    mix-blend-mode: none;
   }
   @media (pointer: coarse) {
     .cursor {
@@ -28,18 +28,19 @@
   const cursor = document.querySelector<HTMLElement>(".cursor");
   const fine = window.matchMedia("(pointer: fine)").matches;
 
+  gsap.set(".cursor", { xPercent: -50, yPercent: -50 });
+
   if (cursor && fine) {
-    const x = gsap.quickTo(cursor, "x", { duration: 0.35, ease: "power3" });
-    const y = gsap.quickTo(cursor, "y", { duration: 0.35, ease: "power3" });
+    const x = gsap.quickSetter(".cursor", "x", "px");
+    const y = gsap.quickSetter(".cursor", "y", "px");
 
     window.addEventListener("mousemove", (e) => {
-      gsap.to(cursor, { opacity: 1, duration: 0.2 });
       x(e.clientX);
       y(e.clientY);
     });
 
     document.querySelectorAll("a, button").forEach((el) => {
-      el.addEventListener("mouseenter", () => gsap.to(cursor, { scale: 3, duration: 0.3 }));
+      el.addEventListener("mouseenter", () => gsap.to(cursor, { scale: 0.5, duration: 0.3}));
       el.addEventListener("mouseleave", () => gsap.to(cursor, { scale: 1, duration: 0.3 }));
     });
   }

@@ -5,6 +5,7 @@ const year = new Date().getFullYear();
 
 <footer>
   <span class="muted">© {year} {site.name}</span>
+  <span class="tagline">Built with <span class="highlight">Natural intelligence, Artificial assistance.</span></span>
   <span class="links">
     {site.socials.map((s) => <a href={s.href} target="_blank" rel="noopener">{s.label}</a>)}
   </span>
@@ -22,9 +23,15 @@ const year = new Date().getFullYear();
   }
   .links {
     display: flex;
-    gap: 1.25rem;
+    gap: 3rem;
   }
   .links a:hover {
     color: var(--accent);
+  }
+  .tagline {
+    font-weight: light;
+  }
+  .highlight {
+    font-weight: bold;
   }
 </style>

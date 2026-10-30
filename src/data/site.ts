@@ -1,6 +1,6 @@
 // Central place for personal details. Edit these and the whole site updates.
 export const site = {
-  name: "Your Name",
+  name: "Fahad Nazmi",
   tagline: "Developer & photographer",
   description: "Personal portfolio: projects, photography and contact.",
   email: "hello@your-domain.com",
@@ -11,9 +11,8 @@ export const site = {
     { label: "Instagram", href: "https://instagram.com/your-username" },
   ],
   nav: [
-    { label: "Work", href: "/work" },
-    { label: "Gallery", href: "/gallery" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
+    { label: "PROJECTS", href: "/work" },
+    { label: "ABOUT", href: "/about" },
+    { label: "CONTACT", href: "/contact" }
   ],
 };

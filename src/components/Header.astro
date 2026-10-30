@@ -25,19 +25,26 @@ const path = Astro.url.pathname;
     justify-content: space-between;
     align-items: center;
     padding: 1.25rem var(--gutter);
+    color: white;
     mix-blend-mode: difference;
   }
   .logo {
+    font-color: var(--fg);
     font-family: var(--font-display);
     font-size: 1.25rem;
+    font-weight: bold;
+    letter-spacing: -0.05em;
   }
   nav {
     display: flex;
-    gap: 1.5rem;
+    gap: 3rem;
     font-size: 0.9rem;
+    font-weight: thin;
+    letter-spacing: -0.05em;
   }
   nav a[aria-current="page"] {
     text-decoration: underline;
     text-underline-offset: 6px;
+    font-color: var(--accent);
   }
 </style>

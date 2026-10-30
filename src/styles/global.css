@@ -4,7 +4,7 @@
   --muted: #0a0a0a;
   --accent: #eb5628;
   --line: rgba(242, 239, 233, 0.14);
-  --font-display: "Fraunces", Georgia, serif;
+  --font-display: "neueHassGroteskDisplay", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --gutter: clamp(1rem, 4vw, 3rem);
 }

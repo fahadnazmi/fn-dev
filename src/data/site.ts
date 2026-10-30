@@ -11,9 +11,8 @@ export const site = {
     { label: "Instagram", href: "https://instagram.com/your-username" },
   ],
   nav: [
-    { label: "Work", href: "/work" },
-    { label: "Gallery", href: "/gallery" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
+    { label: "PROJECTS", href: "/work" },
+    { label: "ABOUT", href: "/about" },
+    { label: "CONTACT", href: "/contact" }
   ],
 };

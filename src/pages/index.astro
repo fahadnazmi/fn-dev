@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+import { site } from "../data/site";
+
+const featured = (await getCollection("projects"))
+  .filter((p) => p.data.featured)
+  .sort((a, b) => b.data.year - a.data.year);
+---
+
+<BaseLayout>
+  <section class="hero">
+    <h1 data-split>{site.name}</h1>
+    <p class="muted" data-reveal>{site.tagline}</p>
+  </section>
+
+  <section>
+    <h2 data-reveal>Selected work</h2>
+    {featured.map((p) => <ProjectCard slug={p.id} {...p.data} />)}
+    <a href="/work" class="more" data-reveal>All projects →</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    min-height: 70svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+  }
+  section + section {
+    margin-top: 6rem;
+  }
+  h2 {
+    margin-bottom: 2rem;
+  }
+  .more {
+    display: inline-block;
+    margin-top: 2rem;
+  }
+</style>

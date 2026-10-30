@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+---
+
+<BaseLayout title="About" description={`About ${site.name}`}>
+  <h1 data-split>About</h1>
+
+  <section class="copy">
+    <p data-reveal>
+      Write a short, honest bio here: who you are, what you build, and what you care about.
+    </p>
+    <h2 data-reveal>Beyond the screen</h2>
+    <p data-reveal>
+      Talk about photography: what you shoot, what draws you to it, and the gear you use.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .copy {
+    max-width: 60ch;
+    margin-top: 4rem;
+    display: grid;
+    gap: 1.5rem;
+  }
+  h2 {
+    margin-top: 2rem;
+  }
+</style>

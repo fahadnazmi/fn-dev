@@ -11,8 +11,7 @@ const featured = (await getCollection("projects"))
 
 <BaseLayout>
   <section class="hero">
-    <h1 data-split>{site.name}</h1>
-    <p class="muted" data-reveal>{site.tagline}</p>
+    <h1 class="hero-title" data-split>Projects<span class="hero-title-accent">.</span></h1>
   </section>
 
   <section>
@@ -24,11 +23,22 @@ const featured = (await getCollection("projects"))
 
 <style>
   .hero {
-    min-height: 70svh;
+    min-height: 45svh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 1rem;
+  }
+  .hero-title{
+    line-height: 1.15;
+    font-size: clamp(5rem, 16vw, 14rem);
+    letter-spacing: -0.05em;
+    margin-left: -0.08em;
+  }
+  .hero-title-accent{
+    line-height: 1.15;
+    font-size: clamp(5rem, 16vw, 14rem);
+    letter-spacing: -0.05em;
+    color: var(--accent);
   }
   section + section {
     margin-top: 6rem;

@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, summary, year, role, stack, link, repo } = entry.data;
+---
+
+<BaseLayout title={title} description={summary}>
+  <h1 data-split>{title}</h1>
+  <p class="muted" data-reveal>{summary}</p>
+
+  <dl data-reveal>
+    <div><dt>Year</dt><dd>{year}</dd></div>
+    {role && <div><dt>Role</dt><dd>{role}</dd></div>}
+    {stack.length > 0 && <div><dt>Stack</dt><dd>{stack.join(", ")}</dd></div>}
+  </dl>
+
+  <article data-reveal>
+    <Content />
+  </article>
+
+  <p class="links" data-reveal>
+    {link && <a href={link} target="_blank" rel="noopener">Live site ↗</a>}
+    {repo && <a href={repo} target="_blank" rel="noopener">Source ↗</a>}
+  </p>
+</BaseLayout>
+
+<style>
+  dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.5rem;
+    margin: 3rem 0;
+    padding: 1.5rem 0;
+    border-block: 1px solid var(--line);
+  }
+  dt {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  dd {
+    margin: 0.25rem 0 0;
+  }
+  article {
+    max-width: 65ch;
+  }
+  .links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+</style>

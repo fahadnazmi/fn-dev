@@ -1,6 +1,6 @@
 // Central place for personal details. Edit these and the whole site updates.
 export const site = {
-  name: "Your Name",
+  name: "Fahad Nazmi",
   tagline: "Developer & photographer",
   description: "Personal portfolio: projects, photography and contact.",
   email: "hello@your-domain.com",

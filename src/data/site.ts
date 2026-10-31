@@ -5,8 +5,8 @@ export const site = {
   email: "hello@your-domain.com",
   location: "New Delhi, India",
   socials: [
-    { label: "GitHub", href: "https://github.com/your-username" },
-    { label: "LinkedIn", href: "https://linkedin.com/in/your-username" },
+    { label: "GitHub", href: "https://github.com/fahadnazmi" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/fahad-nazmi/" },
     { label: "Resume", href: "https://your-website.com/resume" },
   ],
   nav: [

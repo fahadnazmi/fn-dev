@@ -14,7 +14,13 @@ const projects = (await getCollection("projects"))
     </h1>
 
     <div class="hero-image">
-      <img src="/hero.webp" alt="Portfolio hero image" />
+      <img
+        src="/hero.webp"
+        alt="Portfolio hero image"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
     </div>
   </section>
 

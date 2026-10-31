@@ -5,10 +5,14 @@ const path = Astro.url.pathname;
 
 <header>
   <a href="/" class="logo">{site.name}</a>
+
   <nav>
     {
       site.nav.map((item) => (
-        <a href={item.href} aria-current={path.startsWith(item.href) ? "page" : undefined}>
+        <a
+          href={item.href}
+          aria-current={path.startsWith(item.href) ? "page" : undefined}
+        >
           {item.label}
         </a>
       ))
@@ -18,16 +22,26 @@ const path = Astro.url.pathname;
 
 <style>
   header {
+    --hero-gap: clamp(1rem, 3vw, 3rem);
+    --hero-column: minmax(180px, 28%);
+    --image-width: 85%;
+    --image-offset: calc(
+      clamp(8px, 3.5vw, 53px) + clamp(2px, 0.4vw, 6px)
+    );
+    --image-clip: clamp(12px, 1.65vw, 25px);
+
     position: fixed;
     inset: 0 0 auto 0;
     z-index: 10;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr var(--hero-column);
     align-items: center;
+    gap: var(--hero-gap);
     padding: 1.25rem var(--gutter);
     color: white;
     mix-blend-mode: difference;
   }
+
   .logo {
     font-color: var(--fg);
     font-family: var(--font-display);
@@ -35,16 +49,60 @@ const path = Astro.url.pathname;
     font-weight: bold;
     letter-spacing: -0.05em;
   }
+
   nav {
+    width: calc(85% - var(--image-clip));
+    margin-left: calc(
+      var(--image-offset) +
+      var(--image-clip)
+    );
     display: flex;
-    gap: 3rem;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
     font-size: 0.9rem;
     font-weight: thin;
     letter-spacing: -0.05em;
+    white-space: nowrap;
   }
+
   nav a[aria-current="page"] {
-    text-decoration: underline;
-    text-underline-offset: 6px;
-    font-color: var(--accent);
+    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    header {
+      --hero-gap: 1rem;
+      --hero-column: 30%;
+      --image-offset: clamp(6px, 2vw, 15px);
+      --image-clip: 0px;
+    }
+
+    nav {
+      width: 85%;
+      margin-left: var(--image-offset);
+      gap: 0.5rem;
+      font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+    }
+  }
+
+  @media (max-width: 480px) {
+    header {
+      --hero-column: 1fr;
+      --image-offset: 0px;
+      --image-clip: 0px;
+
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    nav {
+      width: min(55%, 200px);
+      margin-left: auto;
+      margin-right: clamp(5px, 1.05vw, 2px);
+      justify-content: space-between;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+    }
   }
 </style>

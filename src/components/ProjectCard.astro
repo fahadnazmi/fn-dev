@@ -1,48 +1,226 @@
----
-interface Props {
-  slug: string;
-  title: string;
-  summary: string;
-  year: number;
-  stack: string[];
-}
 
-const { slug, title, summary, year, stack } = Astro.props;
+---
+const {
+  slug,
+  index = 1,
+  title = "Untitled project",
+  description = "",
+  year,
+  category,
+  tags = [],
+  cover,
+  image
+} = Astro.props;
+
+const previewImage = cover ?? image;
+const projectCategory = category ?? tags[0] ?? "Development";
 ---
 
-<a href={`/work/${slug}`} class="card" data-reveal>
-  <span class="year muted">{year}</span>
-  <h3>{title}</h3>
-  <p class="muted">{summary}</p>
-  <ul>{stack.map((s) => <li>{s}</li>)}</ul>
+<a
+  href={`/work/${slug}`}
+  class="project-card"
+  data-reveal
+  aria-label={`View project: ${title}`}
+>
+  <span class="project-index">
+    {String(index).padStart(2, "0")}
+  </span>
+
+  <div class="project-info">
+    <h3 class="project-title">{title}</h3>
+
+    {description && (
+      <p class="project-description">{description}</p>
+    )}
+  </div>
+
+  <div class="project-preview">
+    {image ? (
+      <img src={image} alt={`${title} preview`} loading="lazy" />
+    ) : (
+      <div class="preview-placeholder">
+        <span>FN</span>
+      </div>
+    )}
+  </div>
+
+  <div class="project-meta">  
+    <span class="project-category">{projectCategory}</span>
+    <span class="project-year">{year}</span>
+  </div>
+
+  <span class="project-arrow" aria-hidden="true">↗</span>
 </a>
 
 <style>
-  .card {
-    display: grid;
-    gap: 0.5rem;
-    padding: 2rem 0;
-    border-top: 1px solid var(--line);
-    transition: padding-left 0.4s ease;
+  .project-card {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr) 0 9rem 2rem;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  min-height: 110px;
+  box-sizing: border-box;
+  width: 100%;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.15);
+  color: var(--fg);
+  text-decoration: none;
+  transition:
+    background-color 0.35s ease,
+    grid-template-columns 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .card:hover {
-    padding-left: 1rem;
+
+  .project-card:hover,
+  .project-card:focus-visible {
+    grid-template-columns: 3.5rem minmax(0, 1fr) 8rem 9rem 2rem;
+    background-color: rgba(10, 10, 10, 0.025);
   }
-  h3 {
-    font-size: clamp(1.75rem, 4vw, 3rem);
+
+  .project-index {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--muted);
+    opacity: 0.55;
+    transition: color 0.3s ease, opacity 0.3s ease;
   }
-  ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    list-style: none;
-    padding: 0;
-    margin: 0.5rem 0 0;
+
+  .project-card:hover .project-index {
+    color: var(--accent);
+    opacity: 1;
+  }
+
+  .project-info {
+    min-width: 0;
+  }
+
+  .project-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.5vw, 2rem);
+    font-weight: 400;
+    letter-spacing: -0.045em;
+    line-height: 1.2;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .project-card:hover .project-title {
+    transform: translateX(6px);
+  }
+
+  .project-description {
+    margin: 0.4rem 0 0;
     font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--muted);
+    opacity: 0.65;
   }
-  li {
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 0.15rem 0.7rem;
+
+  .project-preview {
+    width: 100%;
+    height: 5rem;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(12px) scale(0.92);
+    transition:
+      opacity 0.35s ease,
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .project-card:hover .project-preview,
+  .project-card:focus-visible .project-preview {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+
+  .project-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .project-card:hover .project-preview img {
+    transform: scale(1.08);
+  }
+
+  .preview-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: white;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: -0.08em;
+  }
+
+  .project-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+  }
+
+  .project-category {
+    color: var(--fg);
+  }
+
+  .project-year {
+    color: var(--muted);
+    opacity: 0.55;
+  }
+
+  .project-arrow {
+    font-size: 1.2rem;
+    text-align: right;
+    color: var(--muted);
+    justify-self: end;
+    transition: 
+      color 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .project-card:hover .project-arrow {
+    color: var(--accent);
+    transform: translate(0, -3px);
+  }
+
+  @media (max-width: 768px) {
+    .project-card {
+      grid-template-columns: 2rem minmax(0, 1fr) 4rem 1.5rem;
+      gap: 0.6rem;
+      min-height: 90px;
+      padding: 1.25rem 0;
+    }
+
+    .project-card:hover,
+    .project-card:focus-visible {
+      grid-template-columns: 2rem minmax(0, 1fr) 4rem 1.5rem;
+    }
+
+    .project-preview {
+      display: none;
+    }
+
+    .project-title {
+      font-size: 1.25rem;
+    }
+
+    .project-description {
+      font-size: 0.7rem;
+    }
+
+    .project-meta {
+      font-size: 0.65rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-card,
+    .project-card * {
+      transition: none !important;
+    }
   }
 </style>

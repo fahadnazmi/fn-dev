@@ -7,6 +7,7 @@ stack: [Astro, GSAP, TypeScript]
 link: https://example.com
 repo: https://github.com/your-username/sample-project
 featured: true
+image: /images/projects/thumbnail1.jpeg
 ---
 
 ## Overview

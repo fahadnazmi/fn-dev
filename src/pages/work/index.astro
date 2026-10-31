@@ -1,20 +1,87 @@
+
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
 import { getCollection } from "astro:content";
 
-const projects = (await getCollection("projects")).sort((a, b) => b.data.year - a.data.year);
+const projects = (await getCollection("projects"))
+  .sort((a, b) => b.data.year - a.data.year);
 ---
 
-<BaseLayout title="Work" description="Selected projects and case studies.">
-  <h1 data-split>Work</h1>
-  <div class="list">
-    {projects.map((p) => <ProjectCard slug={p.id} {...p.data} />)}
-  </div>
+<BaseLayout>
+  <section class="hero">
+    <h1 class="hero-title" data-split>
+      Projects<span class="hero-title-accent">.</span>
+    </h1>
+  </section>
+
+  <section class="work-section">
+    <div class="section-heading">
+    </div>
+
+    <div class="project-list">
+      {projects.map((p, i) => (
+        <ProjectCard
+          {...p.data}
+          slug={p.id}
+          index={i + 1}
+        />
+      ))}
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
-  .list {
-    margin-top: 4rem;
+  .hero {
+    min-height: 45svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-title {
+    line-height: 1.15;
+    font-size: clamp(5rem, 16vw, 14rem);
+    letter-spacing: -0.05em;
+    margin-left: -0.08em;
+  }
+
+  .hero-title-accent {
+    color: var(--accent);
+  }
+
+  .work-section {
+    margin-top: 1rem;
+  }
+
+  .section-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .project-list {
+    max-height: 68svh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(10, 10, 10, 0.25) transparent;
+    border-top: 1px solid rgba(10, 10, 10, 0.15);
+    border-bottom: 1px solid rgba(10, 10, 10, 0.15);
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      min-height: 40svh;
+    }
+
+    .work-section {
+      margin-top: 4rem;
+    }
+
+    .project-list {
+      max-height: 75svh;
+    }
   }
 </style>

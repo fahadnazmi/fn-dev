@@ -153,13 +153,13 @@ const projects = (await getCollection("projects"))
 
     .hero-image {
       z-index: 1;
-      width: 100%;
-      max-width: 200px;
+      width: 85%;
       justify-self: end;
-      transform: translate(
-        clamp(-5px, -1.05vw, -2px),
-        clamp(-8px, -1.7vw, -5px)
-      );
+      align-self: center;
+      margin-right: clamp(5px, 1.05vw, 2px);
+      margin-left: 0;
+      transform: translateY(clamp(-20px, -2vw, -10px));
+      clip-path: inset(0);
     }
 
     .work-section {
@@ -177,8 +177,7 @@ const projects = (await getCollection("projects"))
     }
 
     .hero-image {
-      width: 100%;
-      max-width: 180px;
+      width: 85%;
     }
   }
 

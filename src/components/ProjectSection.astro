@@ -1,0 +1,175 @@
+
+---
+interface Props {
+  image: string;
+  alt?: string;
+  imageSide?: "left" | "right";
+  layout?: "split" | "stacked";
+  caption?: string;
+}
+
+const {
+  image,
+  alt = "",
+  imageSide = "right",
+  layout = "split",
+  caption,
+} = Astro.props;
+---
+
+<section class:list={["project-section", layout, imageSide]}>
+  <div class="section-text" data-reveal>
+    <slot />
+  </div>
+
+  <figure class="section-image" data-reveal>
+    <img
+      src={image}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+    />
+    {caption && <figcaption>{caption}</figcaption>}
+  </figure>
+</section>
+
+<style>
+  .project-section {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+    width: min(calc(100% - 4rem), 1200px);
+    margin: clamp(5rem, 9vw, 8rem) auto;
+  }
+
+  /* Split layout */
+  .project-section.left .section-text {
+    order: 2;
+    text-align: right;
+  }
+
+  .project-section.left .section-image {
+    order: 1;
+  }
+
+  .project-section.right .section-text {
+    order: 1;
+    text-align: left;
+  }
+
+  .project-section.right .section-image {
+    order: 2;
+  }
+
+  /* Stacked layout */
+  .project-section.stacked {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .project-section.stacked .section-text {
+    width: 100%;
+    max-width: 850px;
+    margin-inline: auto;
+    text-align: left;
+  }
+
+  .project-section.stacked .section-image {
+    width: 100%;
+  }
+
+  /* Typography */
+  .section-text {
+    min-width: 0;
+    max-width: 600px;
+  }
+
+  .section-text :global(h2) {
+    margin: 0 0 1.5rem;
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 4.5vw, 4rem);
+    font-weight: 400;
+    line-height: 1.10;
+    letter-spacing: -0.05em;
+  }
+
+  .section-text :global(h3) {
+    margin: 2.5rem 0 1rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  .section-text :global(p) {
+    margin: 0 0 1.25rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  .section-text :global(ul),
+  .section-text :global(ol) {
+    margin: 1.5rem 0;
+    padding-left: 1.25rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+
+  .section-text :global(li) {
+    padding-left: 0.35rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Images */
+  .section-image {
+    min-width: 0;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .section-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .section-image figcaption {
+    margin-top: 0.85rem;
+    color: var(--muted);
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .project-section {
+      width: calc(100% - 2rem);
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+      margin: 4rem auto;
+    }
+
+    .project-section.left .section-text,
+    .project-section.right .section-text {
+      order: 1;
+      text-align: left;
+    }
+
+    .project-section.left .section-image,
+    .project-section.right .section-image {
+      order: 2;
+    }
+
+    .project-section.stacked {
+      gap: 1.5rem;
+    }
+
+    .section-text {
+      max-width: none;
+    }
+  }
+</style>

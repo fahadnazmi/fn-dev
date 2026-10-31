@@ -13,7 +13,6 @@ const {
 } = Astro.props;
 
 const previewImage = cover ?? image;
-const projectCategory = category ?? tags[0] ?? "Development";
 ---
 
 <a
@@ -45,7 +44,6 @@ const projectCategory = category ?? tags[0] ?? "Development";
   </div>
 
   <div class="project-meta">  
-    <span class="project-category">{projectCategory}</span>
     <span class="project-year">{year}</span>
   </div>
 
@@ -161,10 +159,6 @@ const projectCategory = category ?? tags[0] ?? "Development";
     align-items: flex-end;
     gap: 0.35rem;
     font-size: 0.75rem;
-  }
-
-  .project-category {
-    color: var(--fg);
   }
 
   .project-year {

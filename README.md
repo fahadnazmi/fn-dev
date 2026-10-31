@@ -69,22 +69,8 @@ portfolio/
 
 **Your details.** Edit `src/data/site.ts` for your name, tagline, email, social links and navigation.
 
-**Add a project.** Create a new file in `src/content/projects/`, for example `my-app.md`:
+**Add a project.** Create a new file in `src/content/projects/`, for example `my-app.mdx`:
 
-```md
----
-title: My App
-summary: One line about what it does.
-year: 2026
-role: Design & development
-stack: [Astro, GSAP]
-link: https://example.com
-repo: https://github.com/you/my-app
-featured: true   # shows on the home page
----
-
-Write the case study in Markdown here.
-```
 
 It appears on `/work` and gets its own page automatically.
 

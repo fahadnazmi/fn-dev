@@ -71,8 +71,9 @@ const path = Astro.url.pathname;
   }
 
   nav a:hover {
-  font-weight: bold;
+    font-weight: bold;
   }
+
   @media (max-width: 768px) {
     header {
       --hero-gap: 1rem;
@@ -95,15 +96,21 @@ const path = Astro.url.pathname;
       --image-offset: 0px;
       --image-clip: 0px;
 
-      grid-template-columns: 1fr;
-      gap: 1rem;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo {
+      align-self: center;
     }
 
     nav {
-      width: min(55%, 200px);
-      margin-left: auto;
-      margin-right: clamp(5px, 1.05vw, 2px);
+      width: min(55vw, 200px);
+      margin-left: 0;
+      margin-right: 0;
       justify-content: space-between;
+      align-items: center;
       gap: 0.5rem;
       font-size: 0.8rem;
     }

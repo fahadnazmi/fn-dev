@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { site } from "../data/site";
 
-const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
+const { formEndpoint } = site.contact;
 const [emailName, emailDomain] = site.email.split("@");
 ---
 
@@ -32,8 +32,8 @@ const [emailName, emailDomain] = site.email.split("@");
     </div>
 
     {
-      endpoint && (
-        <form action={endpoint} method="POST" data-reveal>
+      formEndpoint && (
+        <form action={formEndpoint} method="POST" data-reveal>
           <label>Name <input name="name" required /></label>
           <label>Email <input type="email" name="email" required /></label>
           <label>Message <textarea name="message" rows="5" required></textarea></label>
@@ -157,19 +157,6 @@ const [emailName, emailDomain] = site.email.split("@");
     cursor: pointer;
   }
 
-  .hero-title {
-    position: relative;
-    z-index: 2;
-    margin-left: -0.08em;
-    font-size: clamp(3.5rem, 16vw, 14rem);
-    line-height: 1.15;
-    letter-spacing: -0.05em;
-  }
-
-  .hero-title-accent {
-    color: var(--accent);
-  }
-
   @media (max-width: 1100px) {
     .mail-text,
     .socials {
@@ -217,6 +204,12 @@ const [emailName, emailDomain] = site.email.split("@");
       z-index: 2;
       font-size: clamp(3.2rem, 15vw, 5rem);
       white-space: nowrap;
+    }
+
+    .location {
+      position: static;
+      margin-top: auto;
+      padding-top: 3rem;
     }
   }
 

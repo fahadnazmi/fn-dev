@@ -6,13 +6,11 @@ const {
   title = "Untitled project",
   description = "",
   year,
-  category,
-  tags = [],
-  cover,
-  image
+  image,
+  thumbnail,
 } = Astro.props;
 
-const previewImage = cover ?? image;
+const previewImage = image ?? thumbnail;
 ---
 
 <a
@@ -34,8 +32,13 @@ const previewImage = cover ?? image;
   </div>
 
   <div class="project-preview">
-    {image ? (
-      <img src={image} alt={`${title} preview`} loading="lazy" />
+    {previewImage ? (
+      <img
+        src={previewImage}
+        alt={`${title} preview`}
+        loading="lazy"
+        decoding="async"
+      />
     ) : (
       <div class="preview-placeholder">
         <span>FN</span>
@@ -43,7 +46,7 @@ const previewImage = cover ?? image;
     )}
   </div>
 
-  <div class="project-meta">  
+  <div class="project-meta">
     <span class="project-year">{year}</span>
   </div>
 
@@ -52,20 +55,19 @@ const previewImage = cover ?? image;
 
 <style>
   .project-card {
-  display: grid;
-  grid-template-columns: 3.5rem minmax(0, 1fr) 0 9rem 2rem;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.5rem 0;
-  min-height: 110px;
-  box-sizing: border-box;
-  width: 100%;
-  border-bottom: 1px solid rgba(10, 10, 10, 0.15);
-  color: var(--fg);
-  text-decoration: none;
-  transition:
-    background-color 0.35s ease,
-    grid-template-columns 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr) 0 9rem 2rem;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 0;
+    min-height: 110px;
+    width: 100%;
+    border-bottom: 1px solid rgba(10, 10, 10, 0.15);
+    color: var(--fg);
+    text-decoration: none;
+    transition:
+      background-color 0.35s ease,
+      grid-template-columns 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .project-card:hover,

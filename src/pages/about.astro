@@ -1,78 +1,20 @@
 ---
+import { Picture } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { site } from "../data/site";
-
-// ---------------------------------------------
-// TECH STACK CONFIGURATION
-// ---------------------------------------------
-
-// name : label shown on hover (also used for accessibility)
-// slug : icon slug from https://simpleicons.org (e.g. "react", "typescript")
-// url  : optional link opened in a new tab
-// icon : optional override. Path or URL to any SVG, e.g. "/images/tech/csharp.svg".
-
-const techStack = [
-  { name: "Astro", slug: "astro", url: "https://astro.build" },
-  { name: "TypeScript", slug: "typescript", url: "https://www.typescriptlang.org" },
-  { name: "JavaScript", slug: "javascript", url: "https://developer.mozilla.org/docs/Web/JavaScript" },
-  { name: ".NET", slug: "dotnet", url: "https://dotnet.microsoft.com" },
-  { name: "React", slug: "react", url: "https://react.dev" },
-  { name: "Node.js", slug: "nodedotjs", url: "https://nodejs.org" },
-  { name: "Python", slug: "python", url: "https://www.python.org" },
-  { name: "PostgreSQL", slug: "postgresql", url: "https://www.postgresql.org" },
-  { name: "Docker", slug: "docker", url: "https://www.docker.com" },
-  { name: "Git", slug: "git", url: "https://git-scm.com" },
-  { name: "GitHub", slug: "github", url: "https://github.com" },
-  { name: "Figma", slug: "figma", url: "https://www.figma.com" },
-];
-
-// Seconds for one full loop of the marquee (higher = slower).
-const marqueeDuration = 45;
-
-// How many times the list is repeated to make the loop seamless on wide screens.
-const marqueeCopies = 4;
+const { about } = site;
+const {
+  image,
+  techStack,
+  marqueeDuration,
+  marqueeCopies,
+  eventStepDegrees,
+  timeline,
+} = about;
 
 const iconUrl = (tech: { slug?: string; icon?: string }) =>
   tech.icon ?? `https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/${tech.slug}.svg`;
 
-// ---------------------------------------------
-// TIMELINE CONFIGURATION
-// ---------------------------------------------
-
-// Add, edit, reorder or remove events here.
-
-const timeline = [
-  {
-    date: "2025 — PRESENT",
-    title: "Software Engineer",
-    organization: "Wells Fargo",
-    location: "Hyderabad, India"
-  },
-  {
-    date: "2024 — 2025",
-    title: "Program Associate",
-    organization: "Wells Fargo",
-    location: "Hyderabad, India"
-  },
-  {
-    date: "June 2023 — July 2023",
-    title: "Trainee",
-    organization: "GAIL (India) Ltd.",
-    location: "Noida, India",
-    description:
-      ".NET Developer",
-  },
-  {
-    date: "2020 - 2024",
-    title: "B. Tech. in Information Technology",
-    organization: "Delhi Technological University",
-    location: "New Delhi, India",
-    description:
-      "Cumulative GPA: 9.09 (on a 10-point scale)",
-  },
-];
-
-const eventStepDegrees = 12;
 const eventAngle = (index: number) => 270 + index * eventStepDegrees;
 
 const timelineMarks = Array.from({ length: 360 }, (_, index) => ({
@@ -91,12 +33,14 @@ const timelineMarks = Array.from({ length: 360 }, (_, index) => ({
       </p>
     </div>
     <div class="about-image">
-      <img
-        src="/images/projects/IMG_5981.JPG"
-        alt="A monochrome nighttime scene beneath a starry sky"
-        width="2268"
-        height="4032"
+      <Picture
+        src={image.src}
+        alt={image.alt}
+        widths={[180, 320, 480, 640, 900]}
+        sizes="(max-width: 480px) 30vw, 25vw"
+        formats={["avif", "webp"]}
         loading="eager"
+        fetchpriority="high"
         decoding="async"
       />
     </div>
@@ -112,7 +56,7 @@ const timelineMarks = Array.from({ length: 360 }, (_, index) => ({
 
       <div
         class="tech-marquee"
-        style={`--marquee-duration: ${marqueeDuration}s;`}
+        style={`--marquee-duration: ${marqueeDuration}s; --marquee-offset: ${-100 / marqueeCopies}%;`}
       >
         <div class="tech-track">
           {Array.from({ length: marqueeCopies }, (_, copyIndex) => (
@@ -340,7 +284,6 @@ const timelineMarks = Array.from({ length: 360 }, (_, index) => ({
 
   .about-intro {
     min-height: 45svh;
-    min-height: 45svh;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(180px, 28%);
     align-items: center;
@@ -382,26 +325,8 @@ const timelineMarks = Array.from({ length: 360 }, (_, index) => ({
     clip-path: inset(0 0 0 clamp(12px, 1.65vw, 25px));
   }
 
-  .about-image img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .about-image:hover img {
-    transform: scale(1.04);
-  }
-
-  .hero-title-accent {
-    color: var(--accent);
-  }
-
   @media (max-width: 768px) {
     .about-intro {
-      min-height: 40svh;
       min-height: 40svh;
       grid-template-columns: minmax(0, 1fr) minmax(0, 30%);
       gap: 1rem;
@@ -424,30 +349,38 @@ const timelineMarks = Array.from({ length: 360 }, (_, index) => ({
     .about-intro {
       position: relative;
       min-height: 35svh;
-      min-height: 35svh;
-      grid-template-columns: 1fr 30%;
+      grid-template-columns: minmax(0, 1fr) minmax(4.5rem, 30%);
+      grid-template-rows: auto auto;
       align-items: center;
-      gap: 0;
+      column-gap: 0.75rem;
+      row-gap: 1.5rem;
       padding-top: 2rem;
     }
 
     .about-copy {
-      grid-column: 1 / -1;
+      display: contents;
     }
 
     .about-copy h1 {
-      font-size: clamp(3.2rem, 15vw, 5rem);
+      grid-column: 1 / -1;
+    }
+
+    .about-copy p {
+      grid-column: 1;
+      margin: 0;
+      font-size: clamp(0.9rem, 4vw, 1.05rem);
+      line-height: 1.15;
     }
 
     .about-image {
       z-index: 1;
       grid-column: 2;
+      grid-row: 2;
       justify-self: end;
-      width: 85%;
+      width: 100%;
       align-self: center;
-      margin-right: clamp(5px, 1.05vw, 2px);
-      margin-left: 0;
-      transform: translateY(clamp(-20px, -2vw, -10px));
+      margin: 0;
+      transform: none;
       clip-path: inset(0);
     }
   }
@@ -455,12 +388,6 @@ const timelineMarks = Array.from({ length: 360 }, (_, index) => ({
   @media (max-width: 360px) {
     .about-copy h1 {
       font-size: 3.2rem;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .about-image img {
-      transition: none;
     }
   }
 
@@ -617,14 +544,13 @@ const timelineMarks = Array.from({ length: 360 }, (_, index) => ({
     transform: translate(-50%, 0);
   }
 
-  /* One group is exactly 1 / marqueeCopies of the track (copies = 4 → 25%) */
   @keyframes tech-scroll {
     from {
       transform: translate3d(0, 0, 0);
     }
 
     to {
-      transform: translate3d(-25%, 0, 0);
+      transform: translate3d(var(--marquee-offset), 0, 0);
     }
   }
 

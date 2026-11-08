@@ -1,7 +1,39 @@
-
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { site } from "../data/site";
+
+// ---------------------------------------------
+// TECH STACK CONFIGURATION
+// ---------------------------------------------
+
+// name : label shown on hover (also used for accessibility)
+// slug : icon slug from https://simpleicons.org (e.g. "react", "typescript")
+// url  : optional link opened in a new tab
+// icon : optional override. Path or URL to any SVG, e.g. "/images/tech/csharp.svg".
+
+const techStack = [
+  { name: "Astro", slug: "astro", url: "https://astro.build" },
+  { name: "TypeScript", slug: "typescript", url: "https://www.typescriptlang.org" },
+  { name: "JavaScript", slug: "javascript", url: "https://developer.mozilla.org/docs/Web/JavaScript" },
+  { name: ".NET", slug: "dotnet", url: "https://dotnet.microsoft.com" },
+  { name: "React", slug: "react", url: "https://react.dev" },
+  { name: "Node.js", slug: "nodedotjs", url: "https://nodejs.org" },
+  { name: "Python", slug: "python", url: "https://www.python.org" },
+  { name: "PostgreSQL", slug: "postgresql", url: "https://www.postgresql.org" },
+  { name: "Docker", slug: "docker", url: "https://www.docker.com" },
+  { name: "Git", slug: "git", url: "https://git-scm.com" },
+  { name: "GitHub", slug: "github", url: "https://github.com" },
+  { name: "Figma", slug: "figma", url: "https://www.figma.com" },
+];
+
+// Seconds for one full loop of the marquee (higher = slower).
+const marqueeDuration = 45;
+
+// How many times the list is repeated to make the loop seamless on wide screens.
+const marqueeCopies = 4;
+
+const iconUrl = (tech: { slug?: string; icon?: string }) =>
+  tech.icon ?? `https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/${tech.slug}.svg`;
 
 // ---------------------------------------------
 // TIMELINE CONFIGURATION
@@ -33,7 +65,7 @@ const timeline = [
   {
     date: "2020 - 2024",
     title: "B. Tech. in Information Technology",
-    organization: "Delhi Technological Univeristy",
+    organization: "Delhi Technological University",
     location: "New Delhi, India",
     description:
       "Cumulative GPA: 9.09 (on a 10-point scale)",
@@ -50,19 +82,73 @@ const timelineMarks = Array.from({ length: 360 }, (_, index) => ({
 ---
 
 <BaseLayout title="About" description={`About ${site.name}`}>
-  <h1 data-split>About</h1>
-
-  <section class="copy">
-    <p data-reveal>
-      Write a short, honest bio here: who you are, what you build, and what you care about.
-    </p>
-
-    <h2 data-reveal>Beyond the screen</h2>
-
-    <p data-reveal>
-      Talk about photography: what you shoot, what draws you to it, and the gear you use.
-    </p>
+  <section class="about-intro">
+    <div class="about-copy">
+      <h1 data-split data-split-no-mask>Oh<span class="hero-title-accent">,</span><br />Hey there.</h1>
+      <p data-reveal>
+        I write code, obsess over details, and think way too hard about things nobody else will ever see. <span class="hero-title-accent">Tech</span> and <span class="hero-title-accent">Design</span> are where I have the most fun,
+        mostly because that’s where the tiny details live.
+      </p>
+    </div>
+    <div class="about-image">
+      <img
+        src="/images/projects/IMG_5981.JPG"
+        alt="A monochrome nighttime scene beneath a starry sky"
+        width="2268"
+        height="4032"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
   </section>
+
+  <!-- ---------------------------------------
+       TECH STACK
+  ---------------------------------------- -->
+
+  {techStack.length > 0 && (
+    <section class="tech-section" aria-labelledby="tech-stack-title">
+      <h2 id="tech-stack-title" class="tech-title" data-reveal>My Tech Stack</h2>
+
+      <div
+        class="tech-marquee"
+        style={`--marquee-duration: ${marqueeDuration}s;`}
+      >
+        <div class="tech-track">
+          {Array.from({ length: marqueeCopies }, (_, copyIndex) => (
+            <ul class="tech-group" aria-hidden={copyIndex > 0 ? "true" : undefined}>
+              {techStack.map((tech) => {
+                const Tag = tech.url ? "a" : "div";
+                const linkProps = tech.url
+                  ? {
+                      href: tech.url,
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                      "aria-label": `${tech.name} (opens in new tab)`,
+                      tabindex: copyIndex > 0 ? -1 : undefined,
+                    }
+                  : {};
+
+                return (
+                  <li class="tech-item">
+                    <Tag class="tech-link" {...linkProps}>
+                      <span
+                        class="tech-icon"
+                        style={`--icon: url("${iconUrl(tech)}");`}
+                        role="img"
+                        aria-label={tech.name}
+                      ></span>
+                      <span class="tech-label" aria-hidden="true">{tech.name}</span>
+                    </Tag>
+                  </li>
+                );
+              })}
+            </ul>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- ---------------------------------------
        TIMELINE
@@ -140,7 +226,7 @@ const timelineMarks = Array.from({ length: 360 }, (_, index) => ({
                 )}
               </div>
 
-              <p>{event.description}</p>
+              {event.description && <p>{event.description}</p>}
             </article>
           ))}
         </div>
@@ -252,15 +338,339 @@ const timelineMarks = Array.from({ length: 360 }, (_, index) => ({
      ABOUT CONTENT
   ----------------------------------------- */
 
-  .copy {
-    max-width: 60ch;
-    margin-top: 4rem;
+  .about-intro {
+    min-height: 45svh;
+    min-height: 45svh;
     display: grid;
-    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 28%);
+    align-items: center;
+    gap: clamp(1rem, 3vw, 3rem);
   }
 
-  .copy h2 {
-    margin-top: 2rem;
+  .about-copy {
+    min-width: 0;
+  }
+
+  .about-copy p {
+    margin-top: 5rem;
+    font-family: var(--font-body);
+    font-size: clamp(0.95rem, 2vw, 1.8rem);
+    line-height: 1;
+  }
+
+  .about-copy h1 {
+    position: relative;
+    z-index: 2;
+    margin-left: -0.08em;
+    font-size: clamp(3.5rem, 16vw, 14rem);
+    line-height: 0.88;
+    letter-spacing: -0.05em;
+  }
+
+  .about-image {
+    position: relative;
+    z-index: 1;
+    width: 85%;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    justify-self: start;
+    align-self: center;
+    transform: translate(
+      calc(clamp(8px, 3.5vw, 53px) + clamp(2px, 0.4vw, 6px)),
+      clamp(-40px, -2.6vw, -12px)
+    );
+    clip-path: inset(0 0 0 clamp(12px, 1.65vw, 25px));
+  }
+
+  .about-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .about-image:hover img {
+    transform: scale(1.04);
+  }
+
+  .hero-title-accent {
+    color: var(--accent);
+  }
+
+  @media (max-width: 768px) {
+    .about-intro {
+      min-height: 40svh;
+      min-height: 40svh;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 30%);
+      gap: 1rem;
+    }
+
+    .about-copy h1 {
+      font-size: clamp(3.5rem, 13vw, 6rem);
+    }
+
+    .about-image {
+      width: 85%;
+      transform: translate(
+        clamp(6px, 2vw, 15px),
+        clamp(-20px, -2vw, -10px)
+      );
+    }
+  }
+
+  @media (max-width: 480px) {
+    .about-intro {
+      position: relative;
+      min-height: 35svh;
+      min-height: 35svh;
+      grid-template-columns: 1fr 30%;
+      align-items: center;
+      gap: 0;
+      padding-top: 2rem;
+    }
+
+    .about-copy {
+      grid-column: 1 / -1;
+    }
+
+    .about-copy h1 {
+      font-size: clamp(3.2rem, 15vw, 5rem);
+    }
+
+    .about-image {
+      z-index: 1;
+      grid-column: 2;
+      justify-self: end;
+      width: 85%;
+      align-self: center;
+      margin-right: clamp(5px, 1.05vw, 2px);
+      margin-left: 0;
+      transform: translateY(clamp(-20px, -2vw, -10px));
+      clip-path: inset(0);
+    }
+  }
+
+  @media (max-width: 360px) {
+    .about-copy h1 {
+      font-size: 3.2rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-image img {
+      transition: none;
+    }
+  }
+
+  /* -----------------------------------------
+     TECH STACK SECTION
+  ----------------------------------------- */
+
+  .tech-section {
+    /* Tweak these to restyle every logo at once */
+    --tech-logo-size: clamp(2.25rem, 4vw, 3.25rem); /* same size for every logo */
+    --tech-gap: clamp(2.5rem, 6vw, 5.5rem);
+    --tech-idle: var(--fg);
+
+    margin-top: 8rem;
+  }
+
+  .tech-title {
+    margin: 0 0 2.5rem;
+    font-size: clamp(0.8rem, 1.2vw, 1rem);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Full-bleed strip with softly faded edges */
+  .tech-marquee {
+    position: relative;
+    overflow: hidden;
+    margin-inline: calc(var(--gutter) * -1);
+    /* room for the hover label + scale so nothing gets clipped */
+    padding-block: 1.25rem 2.75rem;
+
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 10%,
+      #000 90%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 10%,
+      #000 90%,
+      transparent 100%
+    );
+  }
+
+  .tech-track {
+    display: flex;
+    width: max-content;
+    animation: tech-scroll var(--marquee-duration, 45s) linear infinite;
+    will-change: transform;
+  }
+
+  /* Pause the loop while the pointer is over the strip */
+  @media (hover: hover) {
+    .tech-marquee:hover .tech-track {
+      animation-play-state: paused;
+    }
+  }
+
+  .tech-group {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: var(--tech-gap);
+    margin: 0;
+    padding: 0;
+    padding-right: var(--tech-gap);
+    list-style: none;
+  }
+
+  .tech-item {
+    flex-shrink: 0;
+  }
+
+  .tech-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--tech-logo-size);
+    height: var(--tech-logo-size);
+    color: var(--tech-idle);
+    text-decoration: none;
+    outline: none;
+    transition:
+      color 0.35s ease,
+      opacity 0.35s ease,
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* The logo is painted with the current colour through a CSS mask,
+     so any single-colour SVG follows the site's theme. */
+  .tech-icon {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: currentColor;
+    -webkit-mask: var(--icon) center / contain no-repeat;
+    mask: var(--icon) center / contain no-repeat;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .tech-label {
+    position: absolute;
+    top: calc(100% + 0.9rem);
+    left: 50%;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--fg);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -6px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Hover: logo lights up in the accent colour, lifts and scales,
+     the label slides in, and the other logos step back. */
+  @media (hover: hover) {
+    .tech-marquee:hover .tech-link:not(:hover):not(:focus-visible) {
+      opacity: 0.35;
+    }
+
+    .tech-link:hover {
+      color: var(--accent);
+    }
+
+    .tech-link:hover .tech-icon {
+      transform: translateY(-6px) scale(1.2);
+    }
+
+    .tech-link:hover .tech-label {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  .tech-link:focus-visible {
+    color: var(--accent);
+  }
+
+  .tech-link:focus-visible .tech-icon {
+    transform: translateY(-6px) scale(1.2);
+  }
+
+  .tech-link:focus-visible .tech-label {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  /* One group is exactly 1 / marqueeCopies of the track (copies = 4 → 25%) */
+  @keyframes tech-scroll {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+
+    to {
+      transform: translate3d(-25%, 0, 0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .tech-section {
+      margin-top: 6rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .tech-section {
+      margin-top: 5rem;
+    }
+
+    .tech-title {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  /* Reduced motion: no scrolling, show one static wrapped grid */
+  @media (prefers-reduced-motion: reduce) {
+    .tech-marquee {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    .tech-track {
+      width: auto;
+      animation: none;
+    }
+
+    .tech-group[aria-hidden="true"] {
+      display: none;
+    }
+
+    .tech-group {
+      flex-wrap: wrap;
+      padding-inline: var(--gutter);
+      row-gap: 2.5rem;
+    }
+
+    .tech-link,
+    .tech-icon,
+    .tech-label {
+      transition: none;
+    }
   }
 
   /* -----------------------------------------
@@ -270,7 +680,7 @@ const timelineMarks = Array.from({ length: 360 }, (_, index) => ({
   .timeline-section {
     position: relative;
     height: calc(var(--event-count) * 100svh);
-    margin-top: 12rem;
+    margin-top: 5rem;
 
     /* Inverted colour scheme */
     background: var(--fg);

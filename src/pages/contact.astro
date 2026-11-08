@@ -5,23 +5,47 @@ import { site } from "../data/site";
 const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
 ---
 
-<BaseLayout title="Contact" description="Get in touch.">
-  <h1 data-split>Contact</h1>
+<BaseLayout title="Contact" description="Get in touch." showFooter={false}>
+  <div class="contact-page">
+    <h1 class="hero-title" data-split>
+      Say Hello
+      <span class="hero-title-accent">!</span>
+    </h1>
 
-  <p class="muted" data-reveal>
-    <a class="mail" href={`mailto:${site.email}`}>{site.email}</a>
-  </p>
+    <p class="mail-text" data-reveal>
+      <a class="mail" href={`mailto:${site.email}`}>
+        {site.email.split("@")[0]}<br />
+        @{site.email.split("@")[1]}
+      </a>
+    </p>
 
-  {
-    endpoint && (
-      <form action={endpoint} method="POST" data-reveal>
-        <label>Name <input name="name" required /></label>
-        <label>Email <input type="email" name="email" required /></label>
-        <label>Message <textarea name="message" rows="5" required></textarea></label>
-        <button type="submit">Send</button>
-      </form>
-    )
-  }
+    <div class="socials" data-reveal>
+      {site.socials.map((s, i) => (
+        <>
+          <a href={s.href} target="_blank" rel="noopener noreferrer">
+            {s.label}
+          </a>
+          {i < site.socials.length - 1 && <span>|</span>}
+        </>
+      ))}
+    </div>
+
+    {
+      endpoint && (
+        <form action={endpoint} method="POST" data-reveal>
+          <label>Name <input name="name" required /></label>
+          <label>Email <input type="email" name="email" required /></label>
+          <label>Message <textarea name="message" rows="5" required></textarea></label>
+          <button type="submit">Send</button>
+        </form>
+      )
+    }
+
+    <div class="location">
+      <span class="location-city">{site.city}</span>
+      <span class="location-coordinates">{site.cityCoordinates}</span>
+    </div>
+  </div>
 </BaseLayout>
 
 <style>
@@ -29,22 +53,82 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
     background: var(--fg);
     color: var(--bg);
   }
-  .mail {
-    font-size: clamp(1.25rem, 3vw, 2rem);
-    border-bottom: 1px solid var(--line);
+
+  .contact-page {
+    --secondary: #a8a8a8;
+    --muted: #777;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100svh - 12rem);
   }
+
+  .mail-text {
+    text-align: left;
+    margin-left: 65%;
+    margin-top: 7rem;
+    margin-bottom: 0;
+  }
+
+  .mail {
+    display: inline-block;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 0.9;
+  }
+
+  .socials {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-left: 65%;
+    margin-top: 0.80rem;
+    font-size: 1.1rem;
+    color: var(--secondary);
+  }
+
+  .socials a {
+    transition: color 0.3s ease;
+  }
+
+  .socials a:hover {
+    color: var(--accent);
+  }
+
+  .location {
+    position: fixed;
+    bottom: var(--gutter);
+    left: var(--gutter);
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 0.7rem;
+    line-height: 0.95;
+  }
+
+  .location-city {
+    color: var(--secondary);
+  }
+
+  .location-coordinates {
+    color: var(--muted);
+  }
+
   form {
     display: grid;
     gap: 1.25rem;
     max-width: 520px;
     margin-top: 4rem;
   }
+
   label {
     display: grid;
     gap: 0.4rem;
     font-size: 0.85rem;
     color: var(--muted);
   }
+
   input,
   textarea {
     font: inherit;
@@ -55,10 +139,12 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
     padding: 0.5rem 0;
     outline: none;
   }
+
   input:focus,
   textarea:focus {
     border-color: var(--accent);
   }
+
   button {
     justify-self: start;
     font: inherit;
@@ -68,5 +154,38 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
     border-radius: 999px;
     padding: 0.7rem 1.75rem;
     cursor: pointer;
+  }
+
+  .hero-title {
+    position: relative;
+    z-index: 2;
+    margin-left: -0.08em;
+    font-size: clamp(3.5rem, 16vw, 14rem);
+    line-height: 1.15;
+    letter-spacing: -0.05em;
+  }
+
+  .hero-title-accent {
+    color: var(--accent);
+  }
+
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: clamp(3.5rem, 13vw, 6rem);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-title {
+      z-index: 2;
+      font-size: clamp(3.2rem, 15vw, 5rem);
+      white-space: nowrap;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .hero-title {
+      font-size: 3.2rem;
+    }
   }
 </style>

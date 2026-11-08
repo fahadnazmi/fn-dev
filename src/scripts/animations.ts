@@ -9,7 +9,10 @@ const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 if (!reduced) {
   // Hero / headline: split into lines and reveal upward
   document.querySelectorAll<HTMLElement>("[data-split]").forEach((el) => {
-    const split = SplitText.create(el, { type: "lines", mask: "lines" });
+    const split = SplitText.create(el, {
+      type: "lines",
+      ...(el.hasAttribute("data-split-no-mask") ? {} : { mask: "lines" }),
+    });
     gsap.from(split.lines, {
       yPercent: 110,
       duration: 1.1,

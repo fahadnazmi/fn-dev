@@ -1,6 +1,7 @@
 ---
 import { site } from "../data/site";
 const path = Astro.url.pathname;
+const isProjectsPage = path === "/" || path.startsWith("/work");
 ---
 
 <header>
@@ -11,7 +12,12 @@ const path = Astro.url.pathname;
       site.nav.map((item) => (
         <a
           href={item.href}
-          aria-current={path.startsWith(item.href) ? "page" : undefined}
+          aria-current={
+            path.startsWith(item.href) ||
+            (item.href === "/work" && isProjectsPage)
+              ? "page"
+              : undefined
+          }
         >
           {item.label}
         </a>

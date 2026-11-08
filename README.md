@@ -67,7 +67,7 @@ portfolio/
 
 ## Customizing
 
-**Your details.** Edit `src/data/site.ts` for your name, tagline, email, social links and navigation.
+**Your details.** Edit `src/data/site.ts` for your name, tagline, email, city, city coordinates, social links and navigation.
 
 **Add a project.** Create a new file in `src/content/projects/`, for example `my-app.mdx`:
 

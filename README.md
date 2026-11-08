@@ -10,7 +10,7 @@
 
 ## Getting started
 
-Requires Node.js 18.20+ (20+ recommended).
+Requires Node.js 22.23.4 or newer (Node 22 LTS recommended).
 
 ```bash
 npm install
@@ -29,36 +29,36 @@ The site runs at `http://localhost:4321`.
 
 ```
 portfolio/
-├── public/                  # Static files served as-is (favicon, etc.)
+├── public/                  # Static files served as-is (favicon, project images)
 ├── src/
 │   ├── assets/
-│   │   └── photos/          # Drop gallery photos here
+│   │   ├── hero.webp
+│   │   └── photos/          # Source photography, optimized by Astro
 │   ├── components/
-│   │   ├── Cursor.astro         # Custom animated cursor
+│   │   ├── Cursor.astro
 │   │   ├── Footer.astro
-│   │   ├── GalleryGrid.astro    # Masonry grid, reads src/assets/photos
 │   │   ├── Header.astro
 │   │   └── ProjectCard.astro
+│   │   └── ProjectSection.astro
 │   ├── content/
 │   │   └── projects/        # One Markdown file per project
 │   ├── data/
-│   │   └── site.ts          # Your name, email, socials, nav links
+│   │   └── site.ts          # Profile, navigation, About, and hero configuration
 │   ├── layouts/
-│   │   └── BaseLayout.astro # HTML shell, fonts, shared scripts
+│   │   └── BaseLayout.astro
 │   ├── pages/
-│   │   ├── index.astro          # Home
+│   │   ├── index.astro
 │   │   ├── about.astro
 │   │   ├── contact.astro
-│   │   ├── gallery.astro
 │   │   └── work/
-│   │       ├── index.astro      # Project list
-│   │       └── [slug].astro     # Project detail page
+│   │       ├── index.astro
+│   │       └── [slug].astro
 │   ├── scripts/
-│   │   ├── animations.ts    # GSAP / SplitText / ScrollTrigger setup
-│   │   └── smooth-scroll.ts # Lenis + ScrollTrigger sync
+│   │   ├── animations.ts
+│   │   └── smooth-scroll.ts
 │   ├── styles/
-│   │   └── global.css       # Design tokens and base styles
-│   └── content.config.ts    # Project collection schema
+│   │   └── global.css
+│   └── content.config.ts
 ├── .env.example
 ├── astro.config.mjs
 ├── package.json
@@ -67,14 +67,14 @@ portfolio/
 
 ## Customizing
 
-**Your details.** Edit `src/data/site.ts` for your name, tagline, email, city, city coordinates, social links and navigation.
+**Your details.** Edit `src/data/site.ts` for your name, tagline, email, socials, city, city coordinates, navigation, tech stack, timeline, and hero images. Edit `src/styles/global.css` for design tokens and global styles.
 
 **Add a project.** Create a new file in `src/content/projects/`, for example `my-app.mdx`:
 
 
 It appears on `/work` and gets its own page automatically.
 
-**Add photos.** Put images in `src/assets/photos/`. Use numbered filenames (`01-sunrise.jpg`) to control order. The filename becomes the alt text, so make it descriptive.
+**Update photography.** Replace the About portrait in `src/assets/photos/` or the project hero in `src/assets/`. Astro generates responsive AVIF and WebP variants for these images.
 
 **Contact form.** Create a free endpoint with [Web3Forms](https://web3forms.com) or [Formspree](https://formspree.io), then copy `.env.example` to `.env` and set:
 

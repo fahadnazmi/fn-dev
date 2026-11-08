@@ -26,7 +26,7 @@ const {
 ---
 
 <BaseLayout title={title} description={summary}>
-  <main class="project-page">
+  <div class="project-page">
     <div class="article-meta">
       <span>PROJECT / {year}</span>
     </div>
@@ -98,7 +98,7 @@ const {
 
       <a href="/work/" class="back-link">← Back to projects</a>
     </footer>
-  </main>
+  </div>
 </BaseLayout>
 
 <style>
@@ -132,7 +132,6 @@ const {
     padding: 0;
     border: 0;
     background: none;
-    cursor: none;
     overflow: hidden;
   }
 
@@ -141,7 +140,6 @@ const {
     width: 100%;
     height: clamp(300px, 65vw, 750px);
     object-fit: cover;
-    cursor: none;
     transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1);
   }
 
@@ -157,13 +155,16 @@ const {
   /* Project section images */
 
   .article-content :global(img) {
-    cursor: none;
     transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+
+  .article-content :global(img:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
   }
 
   .article-content :global(.section-image) {
     overflow: hidden;
-    cursor: none;
   }
 
   .article-content :global(.section-image:hover img) {
@@ -185,7 +186,6 @@ const {
     background: rgba(0, 0, 0, 0.95);
     overflow: hidden;
     overscroll-behavior: none;
-    cursor: none;
   }
 
   .image-lightbox[open] {
@@ -205,7 +205,6 @@ const {
     width: auto;
     height: auto;
     object-fit: contain;
-    cursor: none;
   }
 
   /* Minimal close button */
@@ -217,20 +216,23 @@ const {
     z-index: 10002;
     padding: 0;
     border: none;
-    outline: none;
     background: transparent;
     color: white;
     font-family: inherit;
     font-size: 2.5rem;
     font-weight: 300;
     line-height: 1;
-    cursor: none;
     appearance: none;
     box-shadow: none;
   }
 
   .lightbox-close:hover {
     opacity: 0.6;
+  }
+
+  .lightbox-close:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
   }
 
   /* Custom cursor above fullscreen preview */
@@ -511,8 +513,27 @@ const {
       openPreview(target);
     });
 
+    article?.querySelectorAll<HTMLImageElement>("img").forEach((image) => {
+      image.tabIndex = 0;
+      image.setAttribute("role", "button");
+      image.setAttribute("aria-label", `View ${image.alt || "project"} image fullscreen`);
+      image.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openPreview(image);
+        }
+      });
+    });
+
     // Close button.
     closeButton.addEventListener("click", closePreview);
+
+    lightbox.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closePreview();
+      }
+    });
 
     // Click outside the image to close.
     lightbox.addEventListener("click", (event) => {

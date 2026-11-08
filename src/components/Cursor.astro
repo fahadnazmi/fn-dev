@@ -12,8 +12,6 @@
     background: var(--accent);
     pointer-events: none;
     z-index: 100;
-    opacity: 100;
-    mix-blend-mode: none;
   }
   @media (pointer: coarse) {
     .cursor {
@@ -26,22 +24,26 @@
   import { gsap } from "gsap";
 
   const cursor = document.querySelector<HTMLElement>(".cursor");
-  const fine = window.matchMedia("(pointer: fine)").matches;
-
-  gsap.set(".cursor", { xPercent: -50, yPercent: -50 });
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (cursor && fine) {
-    const x = gsap.quickSetter(".cursor", "x", "px");
-    const y = gsap.quickSetter(".cursor", "y", "px");
+    document.documentElement.classList.add("has-custom-cursor");
+    gsap.set(cursor, { xPercent: -50, yPercent: -50 });
+    const x = gsap.quickSetter(cursor, "x", "px");
+    const y = gsap.quickSetter(cursor, "y", "px");
+    const setScale = (scale: number) => reducedMotion
+      ? gsap.set(cursor, { scale })
+      : gsap.to(cursor, { scale, duration: 0.3 });
 
     window.addEventListener("mousemove", (e) => {
       x(e.clientX);
       y(e.clientY);
-    });
+    }, { passive: true });
 
     document.querySelectorAll("a, button").forEach((el) => {
-      el.addEventListener("mouseenter", () => gsap.to(cursor, { scale: 0.5, duration: 0.3}));
-      el.addEventListener("mouseleave", () => gsap.to(cursor, { scale: 1, duration: 0.3 }));
+      el.addEventListener("mouseenter", () => setScale(0.5));
+      el.addEventListener("mouseleave", () => setScale(1));
     });
   }
 </script>

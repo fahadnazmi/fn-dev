@@ -39,7 +39,6 @@ portfolio/
 │   │   ├── Footer.astro
 │   │   ├── Header.astro
 │   │   └── ProjectCard.astro
-│   │   └── ProjectSection.astro
 │   ├── content/
 │   │   └── projects/        # One Markdown file per project
 │   ├── data/
@@ -69,10 +68,7 @@ portfolio/
 
 **Your details.** Edit `src/data/site.ts` for your name, tagline, email, socials, city, city coordinates, navigation, tech stack, timeline, and hero images. Edit `src/styles/global.css` for design tokens and global styles.
 
-**Add a project.** Create a new file in `src/content/projects/`, for example `my-app.mdx`:
-
-
-It appears on `/work` and gets its own page automatically.
+**Add a project.** Create a new file in `src/content/projects/` with its listing metadata and page content. It appears on `/work` and gets its own page automatically. Each project page is composed independently: write the page in MDX, or import a project-specific Astro component when you need custom markup and styling. The `/work/[slug]` route provides only the site-wide shell and SEO metadata; it does not impose a project layout or reusable section pattern.
 
 **Update photography.** Replace the About portrait in `src/assets/photos/` or the project hero in `src/assets/`. Astro generates responsive AVIF and WebP variants for these images.
 

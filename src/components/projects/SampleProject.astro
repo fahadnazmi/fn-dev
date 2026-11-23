@@ -1,0 +1,396 @@
+---
+const cover = "/images/projects/thumbnail1.jpeg";
+---
+
+<article class="fieldnotes-project">
+  <header class="opening">
+    <div class="topline">
+      <a class="back-link" href="/work/">← All projects</a>
+      <span>Independent study / 2026</span>
+    </div>
+
+    <div class="headline">
+      <p class="eyebrow">A study in digital atmosphere</p>
+      <h1>Make room<br />for the <em>unexpected.</em></h1>
+      <p class="intro">
+        A playful exploration of how image, type, and quiet moments can turn a
+        simple web experience into somewhere worth spending time.
+      </p>
+    </div>
+
+    <figure class="cover">
+      <img src={cover} alt="Visual direction for the creative project" fetchpriority="high" />
+      <figcaption>01 / The first impression</figcaption>
+    </figure>
+
+    <div class="project-facts">
+      <div>
+        <span class="fact-label">ROLE</span>
+        <span>Art direction, design & development</span>
+      </div>
+      <div>
+        <span class="fact-label">TOOLS</span>
+        <span>Astro / CSS / JavaScript</span>
+      </div>
+      <div>
+        <span class="fact-label">YEAR</span>
+        <span>2026</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="manifesto">
+    <span class="section-number">01 — The idea</span>
+    <div>
+      <h2>Less interface.<br /><span>More feeling.</span></h2>
+      <p>
+        The starting point was a question: what if a portfolio felt less like a
+        catalogue and more like opening a sketchbook? The answer became a
+        deliberately loose composition, where every pause and shift in scale
+        helps tell the story.
+      </p>
+    </div>
+    <p class="side-note">Designed to feel discovered, not assembled.</p>
+  </section>
+
+  <section class="interlude" aria-label="Project note">
+    <span class="asterisk" aria-hidden="true">✳</span>
+    <p>Good rhythm comes from knowing when to<br />break the grid.</p>
+    <span class="interlude-credit">A note from the process</span>
+  </section>
+
+  <section class="process">
+    <div class="process-image">
+      <img src={cover} alt="A closer look at the project's visual language" loading="lazy" />
+      <span>02 / In the details</span>
+    </div>
+    <div class="process-copy">
+      <span class="section-number">02 — Making it real</span>
+      <h2>A little structure.<br />A lot of room.</h2>
+      <p>
+        Astro keeps the experience lightweight, while custom CSS gives each
+        moment its own character. Rather than reaching for a row of reusable
+        section templates, the page is composed around its story: one oversized
+        opening, an editorial pause, then a closer look at the craft.
+      </p>
+      <p>
+        The result is responsive without becoming uniform. The composition
+        shifts for smaller screens, keeping the same sense of contrast and
+        breathing room instead of simply shrinking the desktop layout.
+      </p>
+    </div>
+  </section>
+
+  <footer class="ending">
+    <p class="eyebrow">End of this chapter</p>
+    <a class="next-link" href="/work/">
+      <span>Back to all projects</span>
+      <span aria-hidden="true">↗</span>
+    </a>
+  </footer>
+</article>
+
+<style>
+  .fieldnotes-project {
+    --paper: #e8e9df;
+    --ink: #19332f;
+    --rust: #c24e34;
+    margin: -8rem calc(-1 * var(--gutter)) -4rem;
+    padding: 2rem clamp(1.25rem, 6vw, 6rem) 0;
+    overflow: hidden;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+  }
+
+  .opening {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .topline {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid currentColor;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .back-link {
+    text-decoration: none;
+  }
+
+  .headline {
+    position: relative;
+    padding: clamp(5rem, 13vw, 11rem) 0 clamp(3rem, 6vw, 5rem);
+  }
+
+  .eyebrow,
+  .section-number,
+  .fact-label {
+    margin: 0;
+    color: var(--rust);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .headline h1 {
+    max-width: 1100px;
+    margin: 1.25rem 0 2rem;
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 12.5vw, 11rem);
+    font-weight: 400;
+    line-height: 0.82;
+    letter-spacing: -0.085em;
+  }
+
+  .headline h1 em {
+    color: var(--rust);
+    font-weight: 400;
+  }
+
+  .intro {
+    max-width: 390px;
+    margin: 0 0 0 auto;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    line-height: 1.55;
+  }
+
+  .cover {
+    position: relative;
+    margin: 0;
+  }
+
+  .cover img {
+    display: block;
+    width: 100%;
+    height: clamp(300px, 62vw, 760px);
+    object-fit: cover;
+    filter: saturate(0.78);
+  }
+
+  .cover figcaption,
+  .process-image > span {
+    display: block;
+    padding-top: 0.7rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .project-facts {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 0.5fr;
+    gap: 2rem;
+    margin-top: clamp(3rem, 7vw, 6rem);
+    padding: 1.25rem 0;
+    border-top: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+  }
+
+  .project-facts > div {
+    display: grid;
+    gap: 0.65rem;
+    font-size: 0.82rem;
+  }
+
+  .fact-label {
+    font-size: 0.62rem;
+  }
+
+  .manifesto {
+    display: grid;
+    grid-template-columns: 1fr 2fr 0.8fr;
+    gap: clamp(1.5rem, 5vw, 5rem);
+    align-items: start;
+    max-width: 1440px;
+    margin: clamp(7rem, 15vw, 14rem) auto;
+  }
+
+  .manifesto h2,
+  .process-copy h2 {
+    margin: 0 0 2rem;
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 7rem);
+    font-weight: 400;
+    line-height: 0.9;
+    letter-spacing: -0.07em;
+  }
+
+  .manifesto h2 span {
+    color: var(--rust);
+  }
+
+  .manifesto > div > p,
+  .process-copy > p {
+    max-width: 560px;
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  .side-note {
+    max-width: 160px;
+    margin: 5rem 0 0;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    line-height: 1.2;
+    transform: rotate(4deg);
+  }
+
+  .interlude {
+    display: grid;
+    justify-items: center;
+    padding: clamp(5rem, 12vw, 11rem) 1rem;
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+  }
+
+  .asterisk {
+    color: #e8a17e;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+  }
+
+  .interlude p {
+    margin: 1.5rem 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 6vw, 5.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.06em;
+  }
+
+  .interlude-credit {
+    color: #c8c9bc;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .process {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(2rem, 8vw, 8rem);
+    align-items: center;
+    max-width: 1440px;
+    margin: clamp(7rem, 15vw, 14rem) auto;
+  }
+
+  .process-image {
+    min-width: 0;
+  }
+
+  .process-image img {
+    width: 100%;
+    max-height: 700px;
+    object-fit: cover;
+    aspect-ratio: 0.82;
+    filter: saturate(0.65);
+  }
+
+  .process-copy h2 {
+    margin-top: 1.5rem;
+    font-size: clamp(3rem, 6vw, 6rem);
+  }
+
+  .ending {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 2rem 0 clamp(4rem, 9vw, 8rem);
+    border-top: 1px solid currentColor;
+  }
+
+  .next-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 8vw, 7rem);
+    letter-spacing: -0.06em;
+  }
+
+  .next-link span:last-child {
+    color: var(--rust);
+    font-family: var(--font-body);
+    font-size: 0.65em;
+    transition: transform 180ms ease;
+  }
+
+  .next-link:hover span:last-child {
+    transform: translate(0.2em, -0.2em);
+  }
+
+  @media (max-width: 700px) {
+    .fieldnotes-project {
+      padding-top: 1rem;
+    }
+
+    .topline {
+      font-size: 0.58rem;
+    }
+
+    .headline {
+      padding-top: 5rem;
+    }
+
+    .headline h1 {
+      font-size: clamp(3.6rem, 15vw, 7rem);
+    }
+
+    .intro {
+      margin: 2rem 0 0;
+    }
+
+    .project-facts {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem 1rem;
+    }
+
+    .manifesto {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-block: 6rem;
+    }
+
+    .manifesto h2,
+    .process-copy h2 {
+      font-size: clamp(3.5rem, 13vw, 6rem);
+    }
+
+    .side-note {
+      justify-self: end;
+      margin: 0 1rem 0 0;
+    }
+
+    .interlude p br {
+      display: none;
+    }
+
+    .process {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      margin-block: 6rem;
+    }
+
+    .process-image img {
+      max-height: 500px;
+      aspect-ratio: 1;
+    }
+
+    .next-link {
+      font-size: clamp(2.5rem, 11vw, 5rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .next-link span:last-child {
+      transition: none;
+    }
+  }
+</style>
